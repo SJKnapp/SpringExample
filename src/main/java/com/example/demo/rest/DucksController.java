@@ -1,5 +1,9 @@
 package com.example.demo.rest;
 
+import java.util.List;
+
+import javax.websocket.server.PathParam;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +32,7 @@ public class DucksController {
 	}
 
 	@PostMapping("/duck/")
-	public int createDucks(@RequestBody Duck duck) {
+	public ResponseEntity<Duck> createDucks(@RequestBody Duck duck) {
 		return ducksService.createDucks(duck);
 	}
 
@@ -50,6 +54,11 @@ public class DucksController {
 	@PatchMapping("/duck/{index}/patch")
 	public ResponseEntity<?> patchDuck(@PathVariable int index, Duck duck) {
 		return ducksService.patchDuck(index, duck);
+	}
+
+	@GetMapping("/duck/findByName")
+	public ResponseEntity<List<Duck>> findByName(@PathParam(value = "name") String name) {
+		return ducksService.findDuckByName(name);
 	}
 
 	@GetMapping("hello/")
